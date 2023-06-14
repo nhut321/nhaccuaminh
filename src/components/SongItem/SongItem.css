@@ -1,0 +1,29 @@
+.song-item {
+    display: flex;
+    align-items: center;
+    width: 33.3%;
+    padding: 10px;
+    background-color: var(--dark-active);
+    flex-grow: 1;
+    border-radius: 4px;
+}
+
+.song-item__img {
+    display: flex;
+}
+
+.song-item__img img {
+    width: 50px;
+    border-radius: 4px;
+}
+
+.song-item__right {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.song-item__right-info p:first-child {
+    font-weight: bold;
+}

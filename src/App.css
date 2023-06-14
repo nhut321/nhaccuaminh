@@ -1,0 +1,37 @@
+:root {
+  --dark-bgcolor: #1d2631;
+  --dark-color: #c1bebe;
+  --dark-active: #2a3542;
+  --dark-hover: #9ec2ca;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  background-color: var(--dark-bgcolor);
+}
+
+a {
+  text-decoration: none;
+}
+
+.container {
+  margin: 0 20px;
+}
+
+.App {
+  position: relative;
+  /* display: flex; */
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+}

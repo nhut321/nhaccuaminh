@@ -1,0 +1,97 @@
+.search {
+    color: var(--dark-color);
+}
+
+.search-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #4a4a4a;
+    border-radius: 4px;
+    background-color: var(--dark-active);
+}
+
+.search-header i {
+    margin-right: 5px;
+}
+
+.search-header input {
+    width: 100%;
+    border: none;
+    background-color: var(--dark-active);
+    padding: 5px 20px;
+    color: var(--dark-color);
+}
+
+.search-header input:focus {
+    outline: none;
+}
+
+.search-body__history {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-body__history h1 {
+    margin: 20px 0;
+}
+
+.search-body__item {
+    padding: 10px;
+    background-color: var(--dark-active);
+    margin: 3px 0;
+    border-radius: 4px;
+}
+
+/* ------------- */
+.search-result__top {
+    margin-top: 15px;
+    background-color: var(--dark-active);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.search-top__body {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-top__heading {
+    /* color: var(--dark-hover); */
+    margin-bottom: 15px;
+}
+
+.search-top__body-img {}
+
+.search-top__body-info h1 {
+    color: var(--dark-hover);
+}
+
+.search-result__song {
+    margin: 20px 0;
+}
+
+.search-result__song-heading {
+    margin-bottom: 10px;
+}
+
+.search-result__song-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.search-result__playlist-heading {
+    margin-bottom: 10px;
+}
+
+.search-result__playlist-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.search-result__playlist-wrap > .card {
+    width: 24%;
+}

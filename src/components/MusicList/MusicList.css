@@ -1,0 +1,24 @@
+.music-list {
+    margin-top: 20px;
+}
+
+.music-list__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.music-list__top h1 {
+    margin-bottom: 10px;
+    color: var(--dark-color)
+}
+
+.music-list__top a {
+    color: var(--dark-color)
+}
+
+.music-list__wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
