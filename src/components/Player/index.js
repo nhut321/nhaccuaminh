@@ -7,14 +7,17 @@ const Player = () => {
   const [vol, setVol] = useState(50);
   const ZingMp3 = useContext(ZingContext);
   const audioRef = useRef();
+  const [minute, setMinute] = useState(0)
+  const [second, setSecond] = useState(0)
 
   const PlayFn = () => {
     setIsPlay((v) => !v);
+
   };
 
   const handleVolume = (e) => {
     setVol(e.target.value);
-    // audioRef.current?.volume(vol * 0.01);
+    audioRef.current.volume = vol * 0.01
   };
 
   const nextFn = () => {
@@ -34,8 +37,12 @@ const Player = () => {
   // };
 
   useEffect(() => {
-    console.log(audioRef.current)
-  },[])
+    if (audioRef.current) {
+      console.log(audioRef.current.duration)
+      // setMinute(Math.floor(audioRef.current.duration))
+      // setSecond(Math.floor(audioRef.current.duration - (minute * 60)))
+    }
+  }, [])
 
   useEffect(() => {
     if (isPlay) {
@@ -70,7 +77,7 @@ const Player = () => {
             <div className="controls-body__range">
               <p>00:00</p>
               <input type="range" value={0} onChange={(e) => e.target.value} />
-              <p>4:59</p>
+              <p>{(minute < 10 ? '0' + minute : minute) + ':' + (second < 10 ? '0' + second : second)}</p>
             </div>
             <div className="controls-body__btn-wrap">
               <div className="controls-btn">

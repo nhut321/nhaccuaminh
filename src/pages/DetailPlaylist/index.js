@@ -19,7 +19,6 @@ export default function DetailPlaylist() {
     };
     fetchData();
   }, []);
-  console.log(song)
   return (
     <div className="detail">
       <div className="container">
