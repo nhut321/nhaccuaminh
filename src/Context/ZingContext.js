@@ -12,6 +12,7 @@ const ZingContextProvider = ({ children }) => {
     title: "",
     artistsName: "",
     src: "",
+    album: ""
   });
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -29,6 +30,7 @@ const ZingContextProvider = ({ children }) => {
                 title: item.name,
                 artistsName: item.artistsName,
                 src: data.data.data.data[128],
+                // album: 
               },
             ]);
           }

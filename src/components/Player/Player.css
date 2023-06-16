@@ -30,14 +30,14 @@
 
 .controls-top__volume-range {
   position: absolute;
-    left: 34px;
-    top: 0;
-    /* background: var(--dark-active); */
-    display: flex;
-    padding: 17px 17px 15px 0;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    visibility: hidden;
+  left: 34px;
+  top: 0;
+  /* background: var(--dark-active); */
+  display: flex;
+  padding: 17px 17px 15px 0;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  visibility: hidden;
 }
 
 .controls-top__volume-range input {
@@ -161,4 +161,34 @@
 .controls-btn.play i {
   position: absolute;
   left: 17px;
+}
+
+/* .... playlist .... */
+.playlist {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--dark-active);
+  padding: 10px;
+  left: calc(100% + 20px);
+  z-index: 1;
+  transition: 0.3s;
+}
+
+.btn-pl {
+  content: '>';
+  position: absolute;
+  display: flex;
+  right: calc(100% + 2px);
+  top: 50%;
+  width: 20px;
+  height: 51px;
+  background-color: var(--dark-hover);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
 }

@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import MusicCard from "../MusicCard";
 import "./Player.css";
 import { ZingContext } from "../../Context/ZingContext";
+import Playlist from "./Playlist";
 const Player = () => {
   const [isPlay, setIsPlay] = useState(false);
   const [vol, setVol] = useState(50);
@@ -9,6 +10,7 @@ const Player = () => {
   const audioRef = useRef();
   const [minute, setMinute] = useState(0)
   const [second, setSecond] = useState(0)
+ const [playlistOpen, setPlaylistOpen] = useState(false)
 
   const PlayFn = () => {
     setIsPlay((v) => !v);
@@ -31,18 +33,15 @@ const Player = () => {
     });
   };
 
-  // const setVolume = (e) => {
-  //   console.log(e.target.value);
-  //   // audioRef.current.valume(0.1)
-  // };
-
   useEffect(() => {
     if (audioRef.current) {
-      console.log(audioRef.current.duration)
-      // setMinute(Math.floor(audioRef.current.duration))
-      // setSecond(Math.floor(audioRef.current.duration - (minute * 60)))
+      audioRef.current.volume = vol * 0.01
     }
-  }, [])
+  }, [vol])
+
+  function openPlaylist() {
+    setPlaylistOpen(v => !v)
+  }
 
   useEffect(() => {
     if (isPlay) {
@@ -55,6 +54,7 @@ const Player = () => {
   return (
     <div className="player">
       <div className="container">
+        <Playlist playlistOpen={playlistOpen} fn={openPlaylist}/>
         <div className="player-wrapper">
           <MusicCard playerSrc={ZingMp3.playerList[ZingMp3.currentIndex]} />
         </div>
@@ -66,7 +66,7 @@ const Player = () => {
                 <input type="range" value={vol} onChange={handleVolume} />
               </div>
             </div>
-            <div className="controls-top__playlist">
+            <div className="controls-top__playlist" onClick={openPlaylist}>
               <p>Danh sách phát</p>
             </div>
             <div className="controls-top__option">
