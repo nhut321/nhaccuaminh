@@ -3,23 +3,25 @@ import MusicCard from "../MusicCard";
 import "./Player.css";
 import { ZingContext } from "../../Context/ZingContext";
 import Playlist from "./Playlist";
+import { baseUrl } from "../baseUrl";
+import axios from "axios";
 const Player = () => {
   const [isPlay, setIsPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const ZingMp3 = useContext(ZingContext);
   const audioRef = useRef();
-  const [minute, setMinute] = useState(0)
-  const [second, setSecond] = useState(0)
- const [playlistOpen, setPlaylistOpen] = useState(false)
+  const [minute, setMinute] = useState(0);
+  const [second, setSecond] = useState(0);
+  const [playlistOpen, setPlaylistOpen] = useState(false);
+  // const [currentSong, setCurrentSong] = useState({ src: "" });
 
   const PlayFn = () => {
     setIsPlay((v) => !v);
-
   };
 
   const handleVolume = (e) => {
     setVol(e.target.value);
-    audioRef.current.volume = vol * 0.01
+    audioRef.current.volume = vol * 0.01;
   };
 
   const nextFn = () => {
@@ -34,27 +36,45 @@ const Player = () => {
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get(
+          baseUrl +
+            "/mp3/info/source/" +
+            ZingMp3.playerList[ZingMp3.currentIndex]?.encodeId
+        )
+        .then((data) => {
+          ZingMp3.setCurrentSong((v) => {
+            return { ...v, src: data.data.data.data[128] };
+          });
+        });
+    };
+
+    fetchData();
+  }, [ZingMp3.currentIndex]);
+
+  useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = vol * 0.01
     }
   }, [vol])
 
   function openPlaylist() {
-    setPlaylistOpen(v => !v)
+    setPlaylistOpen((v) => !v);
   }
 
   useEffect(() => {
     if (isPlay) {
-      audioRef?.current.play();
+      audioRef.current.play();
     } else {
-      audioRef?.current.pause();
+      audioRef.current.pause();
     }
-  }, [isPlay, ZingMp3.currentIndex]);
+  }, [isPlay,ZingMp3.currentSong]);
 
   return (
     <div className="player">
       <div className="container">
-        <Playlist playlistOpen={playlistOpen} fn={openPlaylist}/>
+        <Playlist playlistOpen={playlistOpen} fn={openPlaylist} />
         <div className="player-wrapper">
           <MusicCard playerSrc={ZingMp3.playerList[ZingMp3.currentIndex]} />
         </div>
@@ -77,7 +97,11 @@ const Player = () => {
             <div className="controls-body__range">
               <p>00:00</p>
               <input type="range" value={0} onChange={(e) => e.target.value} />
-              <p>{(minute < 10 ? '0' + minute : minute) + ':' + (second < 10 ? '0' + second : second)}</p>
+              <p>
+                {(minute < 10 ? "0" + minute : minute) +
+                  ":" +
+                  (second < 10 ? "0" + second : second)}
+              </p>
             </div>
             <div className="controls-body__btn-wrap">
               <div className="controls-btn">
@@ -104,10 +128,7 @@ const Player = () => {
           </div>
         </div>
       </div>
-      <audio
-        ref={audioRef}
-        src={ZingMp3?.playerList[ZingMp3?.currentIndex]?.src}
-      ></audio>
+      <audio ref={audioRef} src={ZingMp3.currentSong.src}></audio>
     </div>
   );
 };

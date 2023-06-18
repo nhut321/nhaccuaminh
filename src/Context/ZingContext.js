@@ -7,14 +7,8 @@ export const ZingContext = createContext();
 const ZingContextProvider = ({ children }) => {
   const [getHome, setGetHome] = useState(null);
   const [playerList, setPlayerList] = useState([]);
-  const [currentSong, setCurrentSong] = useState({
-    image: "",
-    title: "",
-    artistsName: "",
-    src: "",
-    album: ""
-  });
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentSong, setCurrentSong] = useState({src: ''})
 
   const addSong = async (item) => {
     if (!playerList.some((v) => v.encodeId == item.encodeId)) {
@@ -30,13 +24,23 @@ const ZingContextProvider = ({ children }) => {
                 title: item.name,
                 artistsName: item.artistsName,
                 src: data.data.data.data[128],
-                // album: 
+                // album:
               },
             ]);
           }
         });
     }
   };
+
+  // const getCurrentSong = async (encodeId) => {
+  //   try {
+  //     await axios.get(baseUrl + '/mp3/info/source/' + encodeId)
+  //       .then(data => console.log(data))
+  //   } catch(err) {
+  //     console.log(err)
+  //   }
+  // }
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,7 +56,10 @@ const ZingContextProvider = ({ children }) => {
     setCurrentIndex,
     getHome,
     playerList,
+    setPlayerList,
     addSong,
+    currentSong,
+    setCurrentSong
   };
   return <ZingContext.Provider value={data}>{children}</ZingContext.Provider>;
 };

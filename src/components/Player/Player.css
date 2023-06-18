@@ -173,10 +173,10 @@
   left: calc(100% + 20px);
   z-index: 1;
   transition: 0.3s;
+  overflow: scroll;
 }
 
 .btn-pl {
-  content: '>';
   position: absolute;
   display: flex;
   right: calc(100% + 2px);
@@ -191,4 +191,5 @@
   font-weight: bold;
   color: white;
   cursor: pointer;
+  transition: 0.3s;
 }
