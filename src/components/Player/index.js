@@ -13,7 +13,6 @@ const Player = () => {
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
   const [playlistOpen, setPlaylistOpen] = useState(false);
-  // const [currentSong, setCurrentSong] = useState({ src: "" });
 
   const PlayFn = () => {
     setIsPlay((v) => !v);
@@ -24,8 +23,8 @@ const Player = () => {
     audioRef.current.volume = vol * 0.01;
   };
 
-  const nextFn = () => {
-    setIsPlay(true);
+  const nextFn = async () => {
+    await setIsPlay(true);
     ZingMp3.setCurrentIndex((v) => {
       if (v >= ZingMp3.playerList.length - 1) {
         return (v = 0);
@@ -36,28 +35,10 @@ const Player = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get(
-          baseUrl +
-            "/mp3/info/source/" +
-            ZingMp3.playerList[ZingMp3.currentIndex]?.encodeId
-        )
-        .then((data) => {
-          ZingMp3.setCurrentSong((v) => {
-            return { ...v, src: data.data.data.data[128] };
-          });
-        });
-    };
-
-    fetchData();
-  }, [ZingMp3.currentIndex]);
-
-  useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = vol * 0.01
+      audioRef.current.volume = vol * 0.01;
     }
-  }, [vol])
+  }, [vol]);
 
   function openPlaylist() {
     setPlaylistOpen((v) => !v);
@@ -65,18 +46,24 @@ const Player = () => {
 
   useEffect(() => {
     if (isPlay) {
-      audioRef.current.play();
+      setTimeout(() => {
+        audioRef?.current?.play();
+        let min = Math.floor(audioRef.current.duration / 60)
+        let sec = Math.floor(audioRef.current.duration - (min * 60))
+        setMinute(min)
+        setSecond(sec)
+      }, 1000);
     } else {
-      audioRef.current.pause();
+      audioRef?.current?.pause();
     }
-  }, [isPlay,ZingMp3.currentSong]);
+  }, [isPlay, ZingMp3.currentIndex, ZingMp3.currentSong]);
 
   return (
     <div className="player">
       <div className="container">
         <Playlist playlistOpen={playlistOpen} fn={openPlaylist} />
         <div className="player-wrapper">
-          <MusicCard playerSrc={ZingMp3.playerList[ZingMp3.currentIndex]} />
+          <MusicCard playerSrc={ZingMp3.currentSong} />
         </div>
         <div className="controls">
           <div className="controls-top">
@@ -124,7 +111,6 @@ const Player = () => {
                 <i className="fa-solid fa-repeat"></i>
               </div>
             </div>
-            {/* {ZingMp3.currentIndex} */}
           </div>
         </div>
       </div>

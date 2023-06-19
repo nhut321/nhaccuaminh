@@ -8,7 +8,7 @@ export default function MusicCard({ item, index, playerSrc }) {
           <img
             src={
               // item?.thumbnail ? item.thumbnail : "/img/card.png"
-              item?.thumbnail ? item?.thumbnail : playerSrc ? playerSrc.thumbnailM : '/img/card.png'
+              item?.thumbnail ? item?.thumbnail : playerSrc ? playerSrc.image : '/img/card.png'
             }
             alt=""
           />

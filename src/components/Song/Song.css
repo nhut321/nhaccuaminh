@@ -9,6 +9,11 @@
     cursor: pointer;
 }
 
+.list-song__item.active {
+    background-color: var(--dark-hover);
+    color: #ffffff;
+}
+
 .list-song__item:hover {
     background-color: var(--dark-active);
 }

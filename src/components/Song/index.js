@@ -1,6 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Song.css";
 import { ZingContext } from "../../Context/ZingContext";
+import { baseUrl } from "../baseUrl";
+import axios from "axios";
 
 export default function Song({
   name,
@@ -8,20 +10,38 @@ export default function Song({
   image,
   artistsName,
   encodeId,
-  index
+  index,
 }) {
+  const [active, setActive] = useState(null);
   const ZingMp3 = useContext(ZingContext);
-  const item = {
-    image,
-    encodeId,
-    name,
-    artistsName,
+
+  const selectSong = async () => {
+    if (index !== ZingMp3.currentIndex) {
+      // await axios.get(baseUrl + "/mp3/info/source/" + encodeId).then((data) => {
+      //   ZingMp3.setCurrentSong((v) => {
+      //     if (data.data.data.data) {
+      //       return {
+      //         ...v,
+      //         image: ZingMp3.playerList[index]?.thumbnail,
+      //         src: data.data.data.data[128],
+      //         index: index,
+      //       };
+      //     }
+      //   });
+      // });
+      ZingMp3.setCurrentIndex(index);
+    }
   };
-  const selectSong = () => {
-    ZingMp3.setCurrentIndex(index)
-  }
+
   return (
-    <div className="list-song__item" onClick={selectSong}>
+    <div
+      className={
+        ZingMp3.currentIndex == index
+          ? "list-song__item active"
+          : "list-song__item"
+      }
+      onClick={selectSong}
+    >
       <div className="list-song__item-left">
         <img src={image ? image : "/img/card.png"} alt="" />
         <div className="d-flex-column">

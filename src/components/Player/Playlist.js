@@ -17,6 +17,9 @@ const Playlist = ({ playlistOpen, fn }) => {
               name={value.title}
               image={value.thumbnailM}
               artistsName={value.artistsNames}
+              encodeId={value?.encodeId}
+              album={value?.album?.title}
+              index={index}
             />
           );
         })}

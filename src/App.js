@@ -19,7 +19,7 @@ function App() {
           style={{
             marginTop: "25px",
             marginLeft: "200px",
-            marginRight: ZingMp3.playerList.length <= 0 ? "0" : "320px",
+            marginRight: ZingMp3?.currentSong?.image == '' ? "0" : "320px",
             // marginRight: "320px",
           }}
         >
@@ -30,7 +30,7 @@ function App() {
           </Routes>
         </div>
         {
-          ZingMp3.playerList.length <= 0 
+          ZingMp3.currentSong.image == '' 
           ?
           <></>
           :
