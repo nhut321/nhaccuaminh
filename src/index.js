@@ -5,14 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import ZingContextProvider from "./Context/ZingContext";
+import HomeContextProvider from "./Context/HomeContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <ZingContextProvider>
-        <App />
-      </ZingContextProvider>
+      <HomeContextProvider>
+        <ZingContextProvider>
+          <App />
+        </ZingContextProvider>
+      </HomeContextProvider>
     </Router>
   </React.StrictMode>
 );

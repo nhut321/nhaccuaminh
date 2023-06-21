@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import "./Sidebar.css";
+import { useContext } from "react";
+import { HomeContext } from "../../Context/HomeContext";
 const Sidebar = () => {
+  const homeContext = useContext(HomeContext)
   return (
     <div className="sidebar">
       <div className="sidebar-logo">
@@ -10,9 +13,9 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-account">
         <div className="sidebar-account__left">
-          <div className="sidebar-account__btn">Đăng nhập</div>
+          <div className="sidebar-account__btn" onClick={() => {homeContext.setCheckModal(v => !v)}}>Đăng nhập</div>
           <div style={{ margin: "0 5px" }}>|</div>
-          <div className="sidebar-account__btn">Đăng ký</div>
+          <div className="sidebar-account__btn" onClick={() => {homeContext.setCheckModal(v => !v)}}>Đăng ký</div>
         </div>
         <div className="sidebar-account__right">
           <i className="fa-solid fa-gear"></i>

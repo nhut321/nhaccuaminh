@@ -15,6 +15,10 @@
     margin-right: 5px;
 }
 
+.search-header form {
+    width: 100%;
+}
+
 .search-header input {
     width: 100%;
     border: none;

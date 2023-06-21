@@ -3,9 +3,9 @@
 }
 
 .modal {
+    position: fixed;
     display: flex;
     flex-direction: column;
-    position: absolute;
     width: 480px;
     background-color: var(--dark-bgcolor);
     top: 50%;
@@ -30,6 +30,10 @@
     justify-content: center;
     padding: 10px 0;
     border-bottom: 1px solid #8080805e;
+}
+
+.modal-xmark {
+    cursor: pointer;
 }
 
 .modal-body {
@@ -87,7 +91,7 @@
 
 .modal-mask {
     position: absolute;
-    top: 0;
+    top: -100px;
     left: 0;
     right: 0;
     bottom: 0;

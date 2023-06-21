@@ -46,7 +46,6 @@ export default function DetailPlaylist() {
           </div>
         </div>
         <div className="detail-playlist">
-          {ZingMp3.playerList.length}
           <h1>Bài hát</h1>
           <div className="detail-playlist__list">
             {song.map((value, index) => {

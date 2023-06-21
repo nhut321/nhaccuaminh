@@ -9,10 +9,15 @@ const Player = () => {
   const [isPlay, setIsPlay] = useState(false);
   const [vol, setVol] = useState(50);
   const ZingMp3 = useContext(ZingContext);
-  const audioRef = useRef();
-  const [minute, setMinute] = useState(0);
-  const [second, setSecond] = useState(0);
+  let audioRef = useRef();
+
+  const [minuteCurrent, setMinuteCurrent] = useState(0)
+  const [secondCurrent, setSecondCurrent] = useState(0)
+  const [minuteDuration, setMinuteDuration] = useState(0);
+  const [secondDuration, setSecondDuration] = useState(0);
+
   const [playlistOpen, setPlaylistOpen] = useState(false);
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0)
 
   const PlayFn = () => {
     setIsPlay((v) => !v);
@@ -50,13 +55,29 @@ const Player = () => {
         audioRef?.current?.play();
         let min = Math.floor(audioRef.current.duration / 60)
         let sec = Math.floor(audioRef.current.duration - (min * 60))
-        setMinute(min)
-        setSecond(sec)
+        setMinuteDuration(min)
+        setSecondDuration(sec)
       }, 1000);
     } else {
       audioRef?.current?.pause();
     }
   }, [isPlay, ZingMp3.currentIndex, ZingMp3.currentSong]);
+  
+  const changeSeekFn = (e) => {
+    setAudioCurrentTime(e.target.value)
+  }
+  
+  const updateTime = () => {
+    let result
+    let min = Math.floor(audioRef?.current?.currentTime / 60)
+    let sec = Math.floor(audioRef.current.currentTime - (min * 60))
+
+    setMinuteCurrent(min)
+    setSecondCurrent(sec)
+    setAudioCurrentTime((audioRef?.current?.currentTime / audioRef?.current?.duration)*100)
+  }
+
+//  audioRef?.current?
 
   return (
     <div className="player">
@@ -82,12 +103,16 @@ const Player = () => {
           </div>
           <div className="controls-body">
             <div className="controls-body__range">
-              <p>00:00</p>
-              <input type="range" value={0} onChange={(e) => e.target.value} />
-              <p>
-                {(minute < 10 ? "0" + minute : minute) +
+            <p>
+                {(minuteCurrent < 10 ? "0" + minuteCurrent : minuteCurrent) +
                   ":" +
-                  (second < 10 ? "0" + second : second)}
+                  (secondCurrent < 10 ? "0" + secondCurrent : secondCurrent)}
+              </p>
+              <input type="range" value={audioCurrentTime} onChange={changeSeekFn} />
+              <p>
+                {(minuteDuration < 10 ? "0" + minuteDuration : minuteDuration) +
+                  ":" +
+                  (secondDuration < 10 ? "0" + secondDuration : secondDuration)}
               </p>
             </div>
             <div className="controls-body__btn-wrap">
@@ -114,7 +139,7 @@ const Player = () => {
           </div>
         </div>
       </div>
-      <audio ref={audioRef} src={ZingMp3.currentSong.src}></audio>
+      <audio onTimeUpdate={updateTime} ref={audioRef} src={ZingMp3.currentSong.src}></audio>
     </div>
   );
 };
