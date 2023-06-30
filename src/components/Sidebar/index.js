@@ -8,7 +8,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <div className="sidebar-logo">
         <Link to="/">
-          <img src="/img/ncn.png" alt="" />
+          <img src="/img/NCN.png" alt="" />
         </Link>
       </div>
       <div className="sidebar-account">
