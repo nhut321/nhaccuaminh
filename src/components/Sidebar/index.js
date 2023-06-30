@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import "./Sidebar.css";
 import { useContext } from "react";
 import { HomeContext } from "../../Context/HomeContext";
+import { AuthContext } from "../../Context/AuthContext";
 const Sidebar = () => {
+  const authContext = useContext(AuthContext)
   const homeContext = useContext(HomeContext)
   return (
     <div className="sidebar">
@@ -13,9 +15,17 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-account">
         <div className="sidebar-account__left">
+          {
+            authContext.isLogin 
+            ?
+            <div>dang nhap</div>
+            :
+            <>
           <div className="sidebar-account__btn" onClick={() => {homeContext.setCheckModal(v => !v)}}>Đăng nhập</div>
           <div style={{ margin: "0 5px" }}>|</div>
           <div className="sidebar-account__btn" onClick={() => {homeContext.setCheckModal(v => !v)}}>Đăng ký</div>
+            </>
+          }
         </div>
         <div className="sidebar-account__right">
           <i className="fa-solid fa-gear"></i>

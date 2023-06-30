@@ -6,16 +6,19 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import ZingContextProvider from "./Context/ZingContext";
 import HomeContextProvider from "./Context/HomeContext";
+import AuthContextProvider from "./Context/AuthContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <HomeContextProvider>
-        <ZingContextProvider>
-          <App />
-        </ZingContextProvider>
-      </HomeContextProvider>
+      <AuthContextProvider>
+        <HomeContextProvider>
+          <ZingContextProvider>
+            <App />
+          </ZingContextProvider>
+        </HomeContextProvider>
+      </AuthContextProvider>
     </Router>
   </React.StrictMode>
 );

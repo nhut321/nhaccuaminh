@@ -1,13 +1,56 @@
 import React, { useContext, useState } from "react";
 import "./Modal.css";
 import { HomeContext } from "../../Context/HomeContext";
+import { baseUrl } from "../baseUrl";
+import axios from "axios";
+import { AuthContext } from "../../Context/AuthContext";
 
 export default function Modal() {
   const [switchForm, setSwitchForm] = useState(false);
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const authContext = useContext(AuthContext)
   const homeContext = useContext(HomeContext);
   const switchFn = () => {
-    setSwitchForm(v => !v)
-  }
+    setSwitchForm((v) => !v);
+  };
+
+  const formReg = (e) => {
+    e.preventDefault();
+    if (user.password !== user.confirmPassword) {
+      console.log("khong chay");
+    } else {
+      console.log("reg chay");
+    }
+  };
+
+  const formLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(baseUrl + '/auth/login', {
+        email: user.email,
+        password: user.password
+      }).then(data => {
+        if(data.data.status == 200) {
+          localStorage.setItem('token', data.data.token)
+          authContext.setIsLogin(true)
+          homeContext.setCheckModal(false)
+        }
+      })
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onChangeInput = (e) => {
+    setUser((v) => {
+      return { ...v, [e.target.name]: e.target.value };
+    });
+  };
+
   return (
     <div
       className="wrapper-modal"
@@ -28,10 +71,28 @@ export default function Modal() {
             </div>
           </div>
           <div className="modal-body">
-            <form>
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
-              <input type="password" placeholder="Confirm password" />
+            <form onSubmit={formReg}>
+              <input
+                value={user.email}
+                name="email"
+                type="email"
+                placeholder="Email"
+                onChange={onChangeInput}
+              />
+              <input
+                value={user.password}
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={onChangeInput}
+              />
+              <input
+                value={user.confirmPassword}
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm password"
+                onChange={onChangeInput}
+              />
               <button>Đăng ký</button>
             </form>
           </div>
@@ -53,9 +114,21 @@ export default function Modal() {
             </div>
           </div>
           <div className="modal-body">
-            <form>
-              <input type="email" placeholder="Email" />
-              <input type="password" placeholder="Password" />
+            <form onSubmit={formLogin}>
+              <input
+                value={user.email}
+                name="email"
+                type="email"
+                placeholder="Email"
+                onChange={onChangeInput}
+              />
+              <input
+                value={user.password}
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={onChangeInput}
+              />
               <button>Đăng nhập</button>
             </form>
           </div>
